@@ -12,9 +12,12 @@ public class FloatNear : MonoBehaviour {
     float offsetTime;
     [Range(0, 0.3f)]
     public float Speed = 0.1f;
+    [Range(0, 3)]
+    public float ConstantSpeed;
 
     void Awake() {
         BaseTarget = transform.localPosition;
+        offsetTime = Random.value * OffsetInterval;
     }
 
     void FixedUpdate() {
@@ -27,6 +30,10 @@ public class FloatNear : MonoBehaviour {
         }
         // move
         var target = BaseTarget + CurrentOffset.to3();
-        transform.localPosition = Vector3.Lerp(transform.localPosition, target, Speed);
+        if (ConstantSpeed > 0.001f) {
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, target, ConstantSpeed * Time.deltaTime);
+        } else {
+            transform.localPosition = Vector3.Lerp(transform.localPosition, target, Speed);
+        }
     }
 }

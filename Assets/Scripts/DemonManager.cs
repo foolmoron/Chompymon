@@ -35,6 +35,5 @@ public class DemonManager : Manager<DemonManager> {
     }
 
     void Update() {
-        Debug.Log(CurrentDemon?.Name);
     }
 }
