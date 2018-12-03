@@ -190,7 +190,7 @@ public class FileEater : MonoBehaviour {
             TotalSize = (int) (mbBase * ageMultiplier * levelMultiplier);
 
             FileText.text = FileToEat;
-            InfoText.text = $"{Kilobytes}kb (+{mbBase:0.0}) with {DaysOld:0.0} days old age multiplier (x{ageMultiplier:0.0}) and level (x{levelMultiplier:0)}) = {TotalSize/100}.{TotalSize%100}kg Chompymon growth";
+            InfoText.text = $"This {Type} is {Kilobytes}kb (+{mbBase:0.0}) with {DaysOld:0.0} days old age multiplier (x{ageMultiplier:0.0}) and level (x{levelMultiplier:0)}) = {TotalSize/100}.{TotalSize%100}kg Chompymon growth";
         } else {
             Type = null;
             Kilobytes = 0;
