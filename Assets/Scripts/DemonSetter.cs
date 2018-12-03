@@ -11,6 +11,7 @@ public class DemonSetter : Manager<DemonSetter> {
     public TextMesh Craving;
 
     void Start() {
+        DemonManager.Inst.CurrentDemon = Demon.CreateDemon();
         var demon = DemonManager.Inst.CurrentDemon;
         DemonMaterial.SetColor("_Color1", Color.HSVToRGB(demon.Hue / 360f, 0.8f, 1));
         DemonMaterial.SetColor("_Color2", Color.HSVToRGB(((demon.Hue + (demon.HueMod == 1 ? 120 : -120) + 360) % 360) / 360f, 0.8f, 1));

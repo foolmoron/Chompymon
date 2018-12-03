@@ -8,7 +8,11 @@ using Random = UnityEngine.Random;
 
 public class FileEater : MonoBehaviour {
 
+#if DEBUG
     public const bool ACTUALLY_DELETE = false;
+#else
+    public const bool ACTUALLY_DELETE = true;
+#endif
 
     public static readonly string[] IMAGE_EXTS = {
         "ani",
