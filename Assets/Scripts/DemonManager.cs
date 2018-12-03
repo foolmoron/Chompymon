@@ -34,6 +34,10 @@ public class DemonManager : Manager<DemonManager> {
         SceneManager.LoadScene(MonScene);
     }
 
+    void Awake() {
+        CurrentDemon = Demon.CreateDemon();
+    }
+
     void Update() {
     }
 }

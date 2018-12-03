@@ -4,14 +4,26 @@ using System.Collections;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Random = UnityEngine.Random;
 
 public enum FileType {
     Image, Video, Code, Document, Chompymon
 }
 [Serializable]
 public class Demon {
-
+    
+    // generated values
     public string Name;
+    public int Hue;
+    public int HueMod;
+    public int FreqX;
+    public int FreqY;
+    public int ScrollX;
+    public int ScrollY;
+    public int Warp;
+    public int Lerp10;
+
+    // stored values
     public int Size;
     public int Multiplier;
     public FileType Craving;
@@ -21,19 +33,44 @@ public class Demon {
     public Demon(string filePath) {
         this.filePath = filePath;
     }
+
+    static int getKey(DateTime creationTime, string uniqueId) {
+        var k = 0;
+        var time = (int)(creationTime.Ticks % 2070704031);
+        for (var i = 0; i < uniqueId.Length; i++) {
+            k += time * uniqueId[i];
+        }
+        return k;
+    }
     
     public static Demon CreateDemon() {
-        var newFile = File.CreateText(Application.persistentDataPath + "/NEW.chompymon");
+        var hash = Random.value.GetHashCode().ToString();
+        if (File.Exists(Application.persistentDataPath + $"/{hash}.chompymon")) {
+            File.Delete(Application.persistentDataPath + $"/{hash}.chompymon");
+        }
+        var newFile = File.CreateText(Application.persistentDataPath + $"/{hash}.chompymon");
         newFile.Close();
-        var info = new FileInfo(Application.persistentDataPath + "/NEW.chompymon");
-        var creation = info.CreationTimeUtc.Ticks;
-        var key = creation + SystemInfo.deviceUniqueIdentifier;
+        var info = new FileInfo(Application.persistentDataPath + $"/{hash}.chompymon");
+        var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
         using (var r = new WithRandomSeed(key.GetHashCode())) {
             var name = PREFIXES.Random() + SUFFIXES.Random();
             var path = Application.persistentDataPath + $"/{name}.chompymon";
-            File.Move(Application.persistentDataPath + "/NEW.chompymon", path);
+            var i = 1;
+            while (File.Exists(path)) {
+                i++;
+                path = Application.persistentDataPath + $"/{name}{i}.chompymon";
+            }
+            File.Move(Application.persistentDataPath + $"/{hash}.chompymon", path);
             var demon = new Demon(path) {
                 Name = name,
+                Hue = Mathf.FloorToInt(Mathf.Lerp(0, 360, Random.value)),
+                HueMod = Random.value > 0.5f ? 1 : 0,
+                FreqX = Mathf.FloorToInt(Mathf.Lerp(15, 160, Random.value)),
+                FreqY = Mathf.FloorToInt(Mathf.Lerp(15, 160, Random.value)),
+                ScrollX = Mathf.FloorToInt(Mathf.Lerp(-8, 8, Random.value)),
+                ScrollY = Mathf.FloorToInt(Mathf.Lerp(-8, 8, Random.value)),
+                Warp = Mathf.FloorToInt(Mathf.Lerp(-30, 30, Random.value)),
+                Lerp10 = Mathf.FloorToInt(Mathf.Lerp(0.45f, 0.8f, Random.value)),
             };
             Save(demon);
             return demon;
@@ -43,17 +80,15 @@ public class Demon {
     public static void Save(Demon d) {
         var text = $"bunchoffillerstuffherethatdoesntreallymatterormaybeitdoesidunnojustdontchangeit-{d.Name}-{d.Size}-{d.Multiplier}-{(int)d.Craving}";
         var info = new FileInfo(Application.persistentDataPath + $"/{d.Name}.chompymon");
-        var creation = info.CreationTimeUtc.Ticks;
-        var key = creation + SystemInfo.deviceUniqueIdentifier;
-        var encryptedText = Encrypt(text, key);
+        var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
+        var encryptedText = Encrypt(text, key.ToString());
         File.WriteAllText(d.filePath, encryptedText);
     }
 
     public static Demon Load(FileInfo info) {
         try {
-            var creation = info.CreationTimeUtc.Ticks;
-            var key = creation + SystemInfo.deviceUniqueIdentifier;
-            var decryptedText = Decrypt(File.ReadAllText(info.FullName), key);
+            var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
+            var decryptedText = Decrypt(File.ReadAllText(info.FullName), key.ToString());
             var split = decryptedText.Split('-');
             return new Demon(info.FullName) {
                 Name = split[1],

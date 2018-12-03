@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 485265003}
   - component: {fileID: 485265002}
   - component: {fileID: 485265005}
+  - component: {fileID: 485265006}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -604,6 +605,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 2100000, guid: 6846b7f8805a7e54fa7d2fadc2ab400d, type: 2}
+--- !u!114 &485265006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 485265001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b290a41f574a74fa85d5f6da52a007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DemonMaterial: {fileID: 2100000, guid: d723f9a4aaa7ce04881c3ce9658e768a, type: 2}
+  Name: {fileID: 471562409}
+  Level: {fileID: 1467855647}
+  Size: {fileID: 1820805892}
+  Craving: {fileID: 938846222}
 --- !u!1 &627255574 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1172110537566798, guid: 02e5f896714872b41a65f48982ab8506,

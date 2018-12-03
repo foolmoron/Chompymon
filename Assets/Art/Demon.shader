@@ -9,8 +9,7 @@
 		_FreqY ("FreqY", Range(0, 200)) = 100
 		_ScrollX ("ScrollX", Range(-50, 50)) = 10
 		_ScrollY ("ScrollY", Range(-50, 50)) = 0
-		_WarpAmpX ("WarpAmpX", Range(0, 50)) = 10
-		_WarpFreqX ("WarpFreqX", Range(-50, 50)) = 20
+		_Warp ("Warp", Range(-50, 50)) = 20
 		_Lerp ("Lerp", Range(0, 1)) = 0.7
 
         _Rounding ("Rounding", Range(0, 1)) = 0.25
@@ -58,8 +57,7 @@
 			fixed _FreqY;
 			fixed _ScrollX;
 			fixed _ScrollY;
-			fixed _WarpAmpX;
-			fixed _WarpFreqX;
+			fixed _Warp;
 			fixed _Lerp;
 			float _Rounding;
 
@@ -76,7 +74,7 @@
 				fixed4 finalColor = fixed4(0, 0, 0, 0);
                 float l1 = sin01((i.screen.x + i.screen.y) * _FreqX + _Time.y*_ScrollX);
                 float l2 = sin01((i.screen.x + -i.screen.y) * _FreqY + _Time.y*_ScrollY);
-                l1 = sin01((i.screen.x + i.screen.y) * _FreqX + _Time.y*_WarpAmpX*sign(sin(l2*_WarpFreqX)));
+                l1 = sin01((i.screen.x + i.screen.y) * _FreqX + _Time.y*_ScrollX*sign(sin(l2*_Warp)));
 				float l = lerp(l1, l2, _Lerp);
                 finalColor = lerp(_Color1, _Color2, roundTo(l, _Rounding));
 				return finalColor;
