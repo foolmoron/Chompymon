@@ -617,6 +617,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DemonMaterial: {fileID: 2100000, guid: d723f9a4aaa7ce04881c3ce9658e768a, type: 2}
+  Eyes:
+  - {fileID: 1224935625}
+  - {fileID: 1863576060}
   Name: {fileID: 471562409}
   Level: {fileID: 1467855647}
   Size: {fileID: 1820805892}
@@ -849,6 +852,11 @@ MonoBehaviour:
   OffsetInterval: 1.5
   Speed: 0.1
   ConstantSpeed: 0.09
+--- !u!212 &1224935625 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212085405824471924, guid: 08210b6f5448cf846a621554f5b3a66e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1901395481}
 --- !u!1001 &1307561145
 Prefab:
   m_ObjectHideFlags: 0
@@ -1286,6 +1294,11 @@ MonoBehaviour:
   OffsetInterval: 1.5
   Speed: 0.1
   ConstantSpeed: 0.09
+--- !u!212 &1863576060 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212085405824471924, guid: 08210b6f5448cf846a621554f5b3a66e,
+    type: 2}
+  m_PrefabInternal: {fileID: 112018605}
 --- !u!1001 &1901395481
 Prefab:
   m_ObjectHideFlags: 0

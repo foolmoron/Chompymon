@@ -16,6 +16,7 @@ public class Demon {
     public string Name;
     public int Hue;
     public int HueMod;
+    public int EyeHue;
     public int FreqX;
     public int FreqY;
     public int ScrollX;
@@ -65,6 +66,7 @@ public class Demon {
                 Name = name,
                 Hue = Mathf.FloorToInt(Mathf.Lerp(0, 360, Random.value)),
                 HueMod = Random.value > 0.5f ? 1 : 0,
+                EyeHue = Mathf.FloorToInt(Mathf.Lerp(0, 360, Random.value)),
                 FreqX = Mathf.FloorToInt(Mathf.Lerp(15, 160, Random.value)),
                 FreqY = Mathf.FloorToInt(Mathf.Lerp(15, 160, Random.value)),
                 ScrollX = Mathf.FloorToInt(Mathf.Lerp(-8, 8, Random.value)),
@@ -78,7 +80,7 @@ public class Demon {
     }
 
     public static void Save(Demon d) {
-        var text = $"bunchoffillerstuffherethatdoesntreallymatterormaybeitdoesidunnojustdontchangeit-{d.Name}-{d.Size}-{d.Multiplier}-{(int)d.Craving}";
+        var text = $"bunchoffillerstuffherethatdoesntreallymatterormaybeitdoesidunnojustdontchangeit-{d.Name}-{d.Hue}-{d.HueMod}-{d.EyeHue}-{d.FreqX}-{d.FreqY}-{d.ScrollX}-{d.ScrollY}-{d.Warp}-{d.Lerp10}-{d.Size}-{d.Multiplier}-{(int)d.Craving}";
         var info = new FileInfo(Application.persistentDataPath + $"/{d.Name}.chompymon");
         var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
         var encryptedText = Encrypt(text, key.ToString());
@@ -92,9 +94,18 @@ public class Demon {
             var split = decryptedText.Split('-');
             return new Demon(info.FullName) {
                 Name = split[1],
-                Size = int.Parse(split[2]),
-                Multiplier = int.Parse(split[3]),
-                Craving = (FileType)int.Parse(split[4]),
+                Hue = int.Parse(split[2]),
+                HueMod = int.Parse(split[3]),
+                EyeHue = int.Parse(split[4]),
+                FreqX = int.Parse(split[5]),
+                FreqY = int.Parse(split[6]),
+                ScrollX = int.Parse(split[7]),
+                ScrollY = int.Parse(split[8]),
+                Warp = int.Parse(split[9]),
+                Lerp10 = int.Parse(split[10]),
+                Size = int.Parse(split[11]),
+                Multiplier = int.Parse(split[12]),
+                Craving = (FileType)int.Parse(split[13]),
             };
         } catch (Exception e) {
             return null;
