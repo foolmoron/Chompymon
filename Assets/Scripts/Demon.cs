@@ -92,6 +92,9 @@ public class Demon {
             var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
             var decryptedText = Decrypt(File.ReadAllText(info.FullName), key.ToString());
             var split = decryptedText.Split('|');
+            if (info.Name != $"{split[1]}.chompymon" || info.Directory?.FullName.Replace("/", "").Replace("\\", "") != Application.persistentDataPath.Replace("/", "").Replace("\\", "")) {
+                return null;
+            }
             return new Demon(info.FullName) {
                 Name = split[1],
                 Hue = int.Parse(split[2]),

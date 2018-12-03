@@ -113,50 +113,50 @@ public class FileEater : MonoBehaviour {
         "xaml",
     };
     public static readonly string[] VIDEO_EXTS = {
-        ".webm",
-        ".mkv",
-        ".flv",
-        ".flv",
-        ".vob",
-        ".ogv",
-        ".ogg",
-        ".drc",
-        ".gif",
-        ".gifv",
-        ".mng",
-        ".avi",
-        ".mts",
-        ".m2ts",
-        ".mov",
-        ".qt",
-        ".wmv",
-        ".yuv",
-        ".rm",
-        ".rmvb",
-        ".asf",
-        ".amv",
-        ".mp4",
-        ".m4v",
-        ".mpg",
-        ".mp2",
-        ".mpeg",
-        ".mpe",
-        ".mpv",
-        ".mpg",
-        ".mpeg",
-        ".m2v",
-        ".m4v",
-        ".svi",
-        ".3gp",
-        ".3g2",
-        ".mxf",
-        ".roq",
-        ".nsv",
-        ".flv",
-        ".f4v",
-        ".f4p",
-        ".f4a",
-        ".f4b",
+        "webm",
+        "mkv",
+        "flv",
+        "flv",
+        "vob",
+        "ogv",
+        "ogg",
+        "drc",
+        "gif",
+        "gifv",
+        "mng",
+        "avi",
+        "mts",
+        "m2ts",
+        "mov",
+        "qt",
+        "wmv",
+        "yuv",
+        "rm",
+        "rmvb",
+        "asf",
+        "amv",
+        "mp4",
+        "m4v",
+        "mpg",
+        "mp2",
+        "mpeg",
+        "mpe",
+        "mpv",
+        "mpg",
+        "mpeg",
+        "m2v",
+        "m4v",
+        "svi",
+        "3gp",
+        "3g2",
+        "mxf",
+        "roq",
+        "nsv",
+        "flv",
+        "f4v",
+        "f4p",
+        "f4a",
+        "f4b",
     };
 
     public string FileToEat;
@@ -177,7 +177,7 @@ public class FileEater : MonoBehaviour {
 
     void updateFile() {
         if (!string.IsNullOrEmpty(FileToEat)) {
-            var ext = FileToEat.Split('.')[1].ToLower();
+            var ext = FileToEat.Split('.').Last().ToLower();
             Type = ext == "chompymon" ? FileType.Chompymon : IMAGE_EXTS.IndexOf(ext) >= 0 ? FileType.Image : VIDEO_EXTS.IndexOf(ext) >= 0 ? FileType.Video : FileType.Document;
 
             var info = new FileInfo(FileToEat);
@@ -205,7 +205,7 @@ public class FileEater : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && string.IsNullOrEmpty(FileToEat)) {
             try {
                 var file = FileBrowser.OpenSingleFile("File to DESTROY FOREVER by feeding to " + DemonManager.Inst.CurrentDemon.Name, Application.persistentDataPath, "");
-                if (file == DemonManager.Inst.CurrentDemon.filePath) {
+                if (file.Replace("/", "").Replace("\\", "") == DemonManager.Inst.CurrentDemon.filePath.Replace("/", "").Replace("\\", "")) {
                     file = null;
                 }
                 FileToEat = file;
