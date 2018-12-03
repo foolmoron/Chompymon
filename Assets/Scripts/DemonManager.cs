@@ -35,6 +35,7 @@ public class DemonManager : Manager<DemonManager> {
     }
 
     void Awake() {
+        Screen.SetResolution(600, 600, false);
     }
 
     void Update() {

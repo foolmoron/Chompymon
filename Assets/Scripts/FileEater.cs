@@ -187,10 +187,10 @@ public class FileEater : MonoBehaviour {
             var mbBase = Mathf.Pow(Kilobytes, 0.3f);
             var ageMultiplier = Mathf.Max(1, Mathf.Log(Mathf.Max(DaysOld, 1), 3));
             var levelMultiplier = Mathf.Pow(2, DemonManager.Inst.CurrentDemon.Multiplier);
-            TotalSize = (int) Mathf.Pow(mbBase * ageMultiplier, levelMultiplier);
+            TotalSize = (int) (mbBase * ageMultiplier * levelMultiplier);
 
             FileText.text = FileToEat;
-            InfoText.text = $"{Kilobytes}kb (+{mbBase:0.0}) with {DaysOld} days old age multiplier (x{ageMultiplier:0.0}) and level (^{levelMultiplier:0)}) = {TotalSize/100}.{TotalSize%100}kg Chompymon growth";
+            InfoText.text = $"{Kilobytes}kb (+{mbBase:0.0}) with {DaysOld:0.0} days old age multiplier (x{ageMultiplier:0.0}) and level (x{levelMultiplier:0)}) = {TotalSize/100}.{TotalSize%100}kg Chompymon growth";
         } else {
             Type = null;
             Kilobytes = 0;
@@ -205,6 +205,9 @@ public class FileEater : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && string.IsNullOrEmpty(FileToEat)) {
             try {
                 var file = FileBrowser.OpenSingleFile("File to DESTROY FOREVER by feeding to " + DemonManager.Inst.CurrentDemon.Name, Application.persistentDataPath, "");
+                if (file == DemonManager.Inst.CurrentDemon.filePath) {
+                    file = null;
+                }
                 FileToEat = file;
             } catch (Exception e) {
                 FileToEat = null;

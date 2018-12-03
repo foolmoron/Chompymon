@@ -29,7 +29,7 @@ public class Demon {
     public int Multiplier;
     public FileType Craving;
 
-    readonly string filePath;
+    public readonly string filePath;
 
     public Demon(string filePath) {
         this.filePath = filePath;

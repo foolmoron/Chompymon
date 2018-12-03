@@ -42,8 +42,8 @@ public class DemonSetter : Manager<DemonSetter> {
         Craving.text = $"Evolves with a\n{sizeString} {demon.Craving}...";
     }
 
-    const int originalSize = 500;
-    const int step = 32;
+    const int originalSize = 600;
+    const int step = 40;
     public void UpdateWindow() {
         var size = originalSize + step * DemonManager.Inst.CurrentDemon.Multiplier;
         Screen.SetResolution(size, size, false);
