@@ -7,7 +7,7 @@ using System.Text;
 using Random = UnityEngine.Random;
 
 public enum FileType {
-    Image, Video, Code, Document, Chompymon
+    Image, Video, Document, Chompymon
 }
 [Serializable]
 public class Demon {
@@ -80,7 +80,7 @@ public class Demon {
     }
 
     public static void Save(Demon d) {
-        var text = $"bunchoffillerstuffherethatdoesntreallymatterormaybeitdoesidunnojustdontchangeit-{d.Name}-{d.Hue}-{d.HueMod}-{d.EyeHue}-{d.FreqX}-{d.FreqY}-{d.ScrollX}-{d.ScrollY}-{d.Warp}-{d.Lerp10}-{d.Size}-{d.Multiplier}-{(int)d.Craving}";
+        var text = $"bunchoffillerstuffherethatdoesntreallymatterormaybeitdoesidunnojustdontchangeit|{d.Name}|{d.Hue}|{d.HueMod}|{d.EyeHue}|{d.FreqX}|{d.FreqY}|{d.ScrollX}|{d.ScrollY}|{d.Warp}|{d.Lerp10}|{d.Size}|{d.Multiplier}|{(int)d.Craving}";
         var info = new FileInfo(Application.persistentDataPath + $"/{d.Name}.chompymon");
         var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
         var encryptedText = Encrypt(text, key.ToString());
@@ -91,7 +91,7 @@ public class Demon {
         try {
             var key = getKey(info.CreationTimeUtc, SystemInfo.deviceUniqueIdentifier);
             var decryptedText = Decrypt(File.ReadAllText(info.FullName), key.ToString());
-            var split = decryptedText.Split('-');
+            var split = decryptedText.Split('|');
             return new Demon(info.FullName) {
                 Name = split[1],
                 Hue = int.Parse(split[2]),

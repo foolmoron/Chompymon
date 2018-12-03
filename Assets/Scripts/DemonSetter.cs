@@ -24,6 +24,7 @@ public class DemonSetter : Manager<DemonSetter> {
         foreach (var eye in Eyes) {
             eye.color = Color.HSVToRGB(demon.EyeHue / 360f, 0.8f, 1);
         }
+        UpdateWindow();
     }
 
     void Update() {
@@ -34,6 +35,17 @@ public class DemonSetter : Manager<DemonSetter> {
         Name.text = demon.Name;
         Level.text = "Level " + demon.Multiplier;
         Size.text = (demon.Size / 100) + "." + demon.Size % 100 + "kg";
-        Craving.text = "Evolves with a\n1000mb Image...";
+        var sizeString = demon.Craving == FileType.Chompymon
+            ? "Level " + demon.Multiplier
+            : (int) Mathf.Pow(2, demon.Multiplier) + "kb"
+            ;
+        Craving.text = $"Evolves with a\n{sizeString} {demon.Craving}...";
+    }
+
+    const int originalSize = 500;
+    const int step = 32;
+    public void UpdateWindow() {
+        var size = originalSize + step * DemonManager.Inst.CurrentDemon.Multiplier;
+        Screen.SetResolution(size, size, false);
     }
 }

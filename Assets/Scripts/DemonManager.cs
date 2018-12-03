@@ -35,7 +35,6 @@ public class DemonManager : Manager<DemonManager> {
     }
 
     void Awake() {
-        CurrentDemon = Demon.CreateDemon();
     }
 
     void Update() {
